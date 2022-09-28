@@ -1,0 +1,27 @@
+﻿.color1{ 
+    color: #301c41 };
+.color2 {
+    color:  #301c41 };
+.color3 {
+    color:  #413b6b };
+.color4 {
+    color:  #5c65c0 };
+.color5 { 
+    color: #6f95ff };
+
+.bg-botao-versao2{
+color: white;
+background-color: #413b6b;
+border: 5px solid white;
+}
+
+.bg-botao-versao2:hover{
+border-color: white;
+color: white;
+background-color: #5c65c0;
+}
+
+.menu{
+    display:flex;
+}
+ 
