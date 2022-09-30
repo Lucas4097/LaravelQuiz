@@ -1,1 +1,3 @@
-﻿<h1>edit</h1>
+﻿@extends('Templates.layout')
+
+<h1>teste</h1>
