@@ -1,41 +1,54 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  </head>
-</head>
-<body>
-    <table class="table">
+﻿@extends('Templates.layout')
+
+@section('title', 'Dashboard')
+
+@section('body')
+
+<main class="container font-sigmar">
+
+    @include('Templates.dashboardHeader')
+
+    @include('components.success')
+    
+    <table class="table text-white fs-5">
         <thead>
-          <tr>
-            <th>id</th>
-            <th>Pergunta</th>
-            <th>Resposta1</th>
-            <th>Resposta2</th>
-            <th>Resposta3</th>
-            <th>Resposta4</th>
-            <th>Ações</th>
-          </tr>
+            <tr>
+                <th>id</th>
+                <th>Pergunta</th>
+                <th>Resposta1</th>
+                <th>Resposta2</th>
+                <th>Resposta3</th>
+                <th>Resposta4</th>
+                <th>Ações</th>
+            </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>Quanto é 1+1?</td>
-            <td>{{ $question->answer1 }}</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>
-                <button class="btn btn-success">Editar</button>
-                <button class="btn btn-danger">Excluir</button>
-            </td>
-          </tr>
+            @forelse ($question as $question)
+                <tr>
+                    <th>{{ $question->id }}</th>
+                    <td>{{ $question->question }}</td>
+                    <td>{{ $question->answer1 }}</td>
+                    <td>{{ $question->answer2 }}</td>
+                    <td>{{ $question->answer3 }}</td>
+                    <td>{{ $question->answer4 }}</td>
+                    <td>
+                        <a href=" {{route('dashboardEditPage', $question->id)}} " class="btn btn-success">Editar</a>
+                        <form style="display: inline-block" class="m-0" action="{{ route('deleteQuestions', $question->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+
+                        </form>
+                    </td>
+                </tr>
+
+                @empty
+                <tr>
+                    <th class="text-center text-danger" colspan="7">Sem cadastrados!</th>
+                </tr>
+            @endforelse
         </tbody>
-      </table>
-      <a href="{{ route("dashboardCreatePage")  }}">Cadastrar</a>
-</body>
-</html>
+    </table>
+</main>
+@endsection

@@ -26,9 +26,8 @@ class LoginController extends Controller
             return redirect()->route('homePage');
         }
 
-        return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ])->onlyInput('name');
+        return redirect()->route('homePage')
+            ->with('success', 'Login efeituado com sucesso!');
     }
 
     public function logout(Request $request)

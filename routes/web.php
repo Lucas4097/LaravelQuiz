@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Game\QuestionController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,21 +38,30 @@ Route::middleware("auth")->group(function(){
 
     Route::post("logout", [LoginController::class, "logout"])->name("logout");
 
+    Route::get("/game", [QuestionController::class, "gamePage"])->name("gamePage");
+
+    Route::post("game", [QuestionController::class, "verificQuestion"])->name("verificQuestion");
+
 });
 
-// Route::get("/dashboard", [DashboardController::class, "dashboardPage"])->name("dashboardPage");
-Route::get("/dashboard/create", [DashboardController::class, "dashboardCreatePage"])->name("dashboardCreatePage");
-Route::get("/dashboard/edit", [DashboardController::class, "dashboardEditPage"])->name("dashboardEditPage");
-Route::get("/dashboard", [DashboardController::class, "viewQuestions"])->name("viewQuestions");
+Route::middleware("admin")->group(function(){
 
+    Route::get("/dashboard", [DashboardController::class, "dashboardPage"])->name("dashboardPage");
 
-Route::post("createQuestions", [DashboardController::class,"createQuestions"])->name("createQuestions");
+    Route::get("/dashboard/create", [DashboardController::class, "dashboardCreatePage"])->name("dashboardCreatePage");
+
+    Route::get("/dashboard/edit/{id}", [DashboardController::class, "dashboardEditPage"])->name("dashboardEditPage");
+
+    Route::post("createQuestions", [DashboardController::class,"createQuestions"])->name("createQuestions");
+
+    Route::post("editQuestions/{id}", [DashboardController::class, "editQuestions"])->name("editQuestions");
+
+    Route::delete("/dashboard/delete/{id}", [DashboardController::class, 'deleteQuestions'])->name('deleteQuestions');
+
+});
+
 
 Route::get ("/", [HomeController::class, "home"])->name("homePage");
-
-Route::get('/game', function () {
-    return view('game.game');
-});
 
 Route::get('/ranking', function () {
     return view('game.ranking');

@@ -13,7 +13,11 @@
 <body class="font-sigmar bg-fundosite">
     <div class="container mt-4">
         <div menu>
-            <h1 class="text-center my-3 text-light">Puzzle Brain Usuario: {{  Auth::user()->name  }}</h1>
+            <h1 class="text-center my-3 text-light">Puzzle Brain Usuario:
+                @if (Auth::check())
+                    {{  Auth::user()->name  }}
+                @endif
+            </h1>
             <p class="text-center my-3 text-light">Puzzle Brain é um jogo educacional desenvolvido por estudantes do ensino médio do IF-Sertão.
                 Seu Objetivo é ensinar os estudantes e público em geral, conceitos importantes de História, Matemática e Português, que posteriormente, poderá
                 ajuda-lós em trabalhos escolares e até mesmo, no mercado de trabalho.
@@ -23,6 +27,9 @@
             </p>
         </div>
         <div class="my-4 btn-group my-5 d-flex align-content-center justify-content-center gap-1">
+            @if (Auth::check() AND Auth::user()->type == 'admin')
+                <a class="btn btn-primary bg-botao-versao2 btn btn-outline-light btn-lg" href="{{route('dashboardPage')}}">Dashboard</a>
+            @endif
             <a class="btn btn-primary bg-botao-versao2 btn btn-outline-light btn-lg" href="game">Iniciar jogo</a>
             <a class="btn btn-primary bg-botao-versao2 btn btn-outline-light btn-lg" href="ranking">Ranking</a>
             <a class="btn btn-primary bg-botao-versao2 btn btn-outline-light btn-lg" href="{{route("registerPage")}}">Cadastro</a>

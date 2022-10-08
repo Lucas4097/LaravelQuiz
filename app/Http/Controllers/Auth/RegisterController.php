@@ -17,10 +17,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        // $dados = $request->all();
-        // $dados['senha'] = Hash::make($request->senha);
-        // User::create($dados);
-
         $request->validate([
             'name' => 'required|unique:users',
             'password' => 'required',
@@ -31,12 +27,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        // Auth::attempt($request->except("_token"));
-        // $request->session()->regenerate();
-
-        // return redirect()->route('homePage');
-
         $dados = new LoginController;
         $dados->login($request);
+
+        return redirect()->route('homePage')
+            ->with('success', 'Cadastro efeituado com sucesso!');
     }
 }

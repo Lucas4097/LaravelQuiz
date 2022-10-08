@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('type')->default('comum');
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('id_user');
+            $table->integer('level');
+            $table->foreign('id_user')->references('id')->on('user');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('levels');
     }
 };

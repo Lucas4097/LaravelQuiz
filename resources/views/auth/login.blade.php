@@ -22,6 +22,8 @@
                     </div>
                 @endif
 
+                @include('components.success')
+
                 <input name="name" class="login_input" type="text" placeholder="Nome"><br><br>
                 <input name="password" class="login_input" type="password" placeholder="Senha"><br><br>
                 <button type="submit" id="login_botao">Logar-se</button>
@@ -29,7 +31,7 @@
                     <a class="link-light" href="{{route("registerPage")}}">Quer se cadastrar?</a>
                 </div>
                 <div class="menu_login font-sigmar">
-                    <button type="button" onclick="return confirm('Quer voltar para o menu?')" id="menuButton" class="btn btn-outline-light btn-lg bg-azulclaro borda-azul"><a href="/">Menu</a></button>
+                    <button type="button" onclick="return confirm('Quer voltar para o menu?')" id="menuButton" class="btn btn-outline-light btn-lg bg-azulclaro borda-azul"><a href="{{route('homePage')}}">Menu</a></button>
                 </div>
             </div>
         </form>
