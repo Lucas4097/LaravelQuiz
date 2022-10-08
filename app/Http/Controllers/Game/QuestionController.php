@@ -30,6 +30,8 @@ class QuestionController extends Controller
         $level = $request->level;
         $score = $request->score;
 
+        dd($level);
+
         if ($level == 1) {
             Score::create([
                 'score' => $score,
@@ -38,11 +40,15 @@ class QuestionController extends Controller
         }
 
         if ($request->answer == $validation->answerTrue){
-
-            $id = Auth::user()->id;
-            Score::find($id)->update([
-                'score' => $score + 10,
-            ]);
+            $user = Auth::user()->name;
+            $id = Score::max('id');
+            Score::where([
+                'user' => $user,
+                'id' => $id
+                ])
+                    ->update([
+                        'score' => $score + 10,
+                        ]);
 
         } else{
             echo "Resposta errada";
