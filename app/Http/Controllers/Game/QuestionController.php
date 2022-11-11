@@ -14,6 +14,29 @@ class QuestionController extends Controller
 {
     public function gamePage(){
 
+        $id_user = Auth::user()->id;
+        if (Level::where('id_user', $id_user)->count() == 1) {
+
+            $user = Auth::user()->name;
+            $id_score = Score::max('id');
+            $score = Score::where([
+                'user' => $user,
+                'id' => $id_score
+            ])->first();
+
+            $level = Level::where([
+                'id' => Level::max('id'),
+                'id_user' => $id_user
+            ])->first();
+
+            return view('game.question', [
+                'question' => DB::table('questions')->inRandomOrder()->first(),
+                'score' => $score->score,
+                'level' => $level->level
+            ]);
+                // ->with('success', 'Progresso restaurado!');
+        }
+
         return view('game.question', [
             'question' => DB::table('questions')->inRandomOrder()->first(),
             'score' => 0,
@@ -30,42 +53,49 @@ class QuestionController extends Controller
         $level = $request->level;
         $score = $request->score;
 
-        dd($level);
+        $user = Auth::user()->name;
+        $id_user = Auth::user()->id;
 
         if ($level == 1) {
             Score::create([
                 'score' => $score,
-                'user' => Auth::user()->name
+                'user' => $user
+            ]);
+
+            Level::create([
+                'level' => $level,
+                'id_user' => Auth::user()->id
             ]);
         }
 
         if ($request->answer == $validation->answerTrue){
-            $user = Auth::user()->name;
-            $id = Score::max('id');
+            $score = $score + 10;
+            $id_score = Score::max('id');
             Score::where([
                 'user' => $user,
-                'id' => $id
-                ])
-                    ->update([
-                        'score' => $score + 10,
+                'id' => $id_score
+                ])->update([
+                        'score' => $score,
                         ]);
 
-        } else{
-            echo "Resposta errada";
         }
 
-        if ($level > 5) {
-            return redirect()->route('homePage');
+        if ($level >= 5) {
+            Level::where(['id_user' => $id_user])->delete();
+            return redirect()->route('endgamePage');
         }
-
-        Level::create([
-            'level' => $level,
-            'id_user' => Auth::user()->id
-        ]);
 
         $level++;
+        $id_level = Level::max('id');
+        Level::where([
+            'id_user' => $id_user,
+            'id' => $id_level
+            ])->update([
+                    'level' => $level,
+                    ]);
 
-        return redirect()->route('gamePage', [
+        return view('game.question', [
+            'question' => DB::table('questions')->inRandomOrder()->first(),
             'score' => $score,
             'level' => $level
         ]);

@@ -11,7 +11,12 @@
         <ul class="dropdown-menu bg-primary text-white">
         <li><a class="dropdown-item" href="{{ route('dashboardCreatePage') }}">Cadastrar</a></li>
         <li><a class="dropdown-item" href="{{ route('dashboardPage') }}">Painel</a></li>
-        <li><a class="dropdown-item" href="#">Deslogar</a></li>
+        <li>
+            <form action="{{route('logout')}}" method="post">
+                @csrf
+                <button class="dropdown-item" type="submit">Deslogar</button>
+            </form>
+        </li>
         </ul>
     </div>
 </header>

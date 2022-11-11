@@ -14,6 +14,7 @@
 <body class="bg-fundosite p-2 font-sigmar">
     <section id="corpo_game" class="container text-light">
         <header>
+            {{-- @include('components.success') --}}
             <h1 class="text-center">Puzzle Brain</h1>
         </header>
         <main>
@@ -22,7 +23,7 @@
                 <div class="card-body borda-azul bg-azulclaro p-4 row">
 
                     <div class="lead">
-                        <p>Questão: 1/10</p>
+                        <p>Questão: {{$level}}/10</p>
                         <p>Pergunta: {{$question->question}} </p>
                         <p>Pontuação: {{$score}}</p>
                     </div>

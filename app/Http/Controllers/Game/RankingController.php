@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
-    //
+    public function rankingPage()
+    {
+        return view('game.ranking');
+    }
 }

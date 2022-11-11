@@ -3,8 +3,12 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Game\EndgameController;
 use App\Http\Controllers\Game\QuestionController;
+use App\Http\Controllers\Game\RankingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\HomeController as UserHomeController;
+use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +46,10 @@ Route::middleware("auth")->group(function(){
 
     Route::post("game", [QuestionController::class, "verificQuestion"])->name("verificQuestion");
 
+    Route::get('/ranking', [RankingController::class, 'rankingPage'])->name("rankingPage");
+
+    Route::get('/endgame', [EndgameController::class, 'endgamePage'])->name("endgamePage");
+
 });
 
 Route::middleware("admin")->group(function(){
@@ -61,12 +69,6 @@ Route::middleware("admin")->group(function(){
 });
 
 
-Route::get ("/", [HomeController::class, "home"])->name("homePage");
+Route::get ("/", [UserHomeController::class, "home"])->name("homePage");
+Route::get ("/profile", [ProfileController::class, "profile"])->name("profilePage");
 
-Route::get('/ranking', function () {
-    return view('game.ranking');
-});
-
-Route::get('/endgame', function () {
-    return view('game.endgame');
-});
