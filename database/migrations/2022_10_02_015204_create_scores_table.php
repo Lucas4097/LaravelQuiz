@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->string('user');
+            // $table->string('user');
             $table->integer('score');
-            $table->foreign('user')->references('name')->on('user');
+            // $table->foreign('user')->references('name')->on('user');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

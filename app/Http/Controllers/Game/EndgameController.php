@@ -12,7 +12,7 @@ class EndgameController extends Controller
     public function endgamePage()
     {
         return view('game.endgame', [
-            'score' => Score::orderBy('id', 'DESC')->where('user', Auth::user()->name)->first()
+            'score' => Score::orderBy('id', 'DESC')->where('user_id', Auth::user()->id)->first()
         ]);
     }
 }

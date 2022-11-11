@@ -15,26 +15,25 @@ class QuestionController extends Controller
     public function gamePage(){
 
         $id_user = Auth::user()->id;
-        if (Level::where('id_user', $id_user)->count() == 1) {
+        if (Level::where('user_id', $id_user)->count() == 1) {
 
-            $user = Auth::user()->name;
+            $user = Auth::user()->id;
             $id_score = Score::max('id');
             $score = Score::where([
-                'user' => $user,
+                'user_id' => $user,
                 'id' => $id_score
             ])->first();
 
             $level = Level::where([
                 'id' => Level::max('id'),
-                'id_user' => $id_user
+                'user_id' => $id_user
             ])->first();
 
             return view('game.question', [
                 'question' => DB::table('questions')->inRandomOrder()->first(),
                 'score' => $score->score,
                 'level' => $level->level
-            ]);
-                // ->with('success', 'Progresso restaurado!');
+            ])->with('success', 'Progresso restaurado!');
         }
 
         return view('game.question', [

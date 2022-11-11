@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->string('id_user');
+            // $table->string('id_user');
             $table->integer('level');
-            $table->foreign('id_user')->references('id')->on('user');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

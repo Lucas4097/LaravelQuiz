@@ -10,8 +10,6 @@
 
         @include('components.success')
 
-        @include('components.fail')
-
         <div class="mt-4 d-flex justify-content-center">
 
             <form style="width: 750px;" class="mt-4 p-2 border border-2 border-primary bg-primary" action="{{route("createQuestions")}}" method="post">
