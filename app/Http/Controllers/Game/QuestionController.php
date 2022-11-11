@@ -52,18 +52,18 @@ class QuestionController extends Controller
         $level = $request->level;
         $score = $request->score;
 
-        $user = Auth::user()->name;
+        $user = Auth::user()->id;
         $id_user = Auth::user()->id;
 
         if ($level == 1) {
             Score::create([
                 'score' => $score,
-                'user' => $user
+                'user_id' => $id_user
             ]);
 
             Level::create([
                 'level' => $level,
-                'id_user' => Auth::user()->id
+                'user_id' => $user
             ]);
         }
 
@@ -71,7 +71,7 @@ class QuestionController extends Controller
             $score = $score + 10;
             $id_score = Score::max('id');
             Score::where([
-                'user' => $user,
+                'user_id' => $user,
                 'id' => $id_score
                 ])->update([
                         'score' => $score,
@@ -80,14 +80,14 @@ class QuestionController extends Controller
         }
 
         if ($level >= 5) {
-            Level::where(['id_user' => $id_user])->delete();
+            Level::where(['user_id' => $id_user])->delete();
             return redirect()->route('endgamePage');
         }
 
         $level++;
         $id_level = Level::max('id');
         Level::where([
-            'id_user' => $id_user,
+            'user_id' => $id_user,
             'id' => $id_level
             ])->update([
                     'level' => $level,

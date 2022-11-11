@@ -11,6 +11,6 @@ class Level extends Model
 
     protected $fillable = [
         'level',
-        'id_user'
+        'user_id'
     ];
 }

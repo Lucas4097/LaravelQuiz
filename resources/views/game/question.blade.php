@@ -14,7 +14,8 @@
 <body class="bg-fundosite p-2 font-sigmar">
     <section id="corpo_game" class="container text-light">
         <header>
-            {{-- @include('components.success') --}}
+            @dd(session('success'))
+            @include('components.success')
             <h1 class="text-center">Puzzle Brain</h1>
         </header>
         <main>

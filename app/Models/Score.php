@@ -11,6 +11,6 @@ class Score extends Model
 
     protected $fillable = [
         'score',
-        'user',
+        'user_id',
     ];
 }
